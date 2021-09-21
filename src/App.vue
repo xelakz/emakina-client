@@ -1,30 +1,32 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <System v-if="loggedIn"/>
+  <Auth v-else/>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Auth from '@/views/Auth.vue';
+import System from '@/views/System.vue';
+
+export default defineComponent({
+  name: 'App',
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  components: {
+    Auth,
+    System,
+  },
+  mounted() {
+    if (localStorage.getItem('token')) {
+      this.loggedIn = true;
+    }
+  },
+});
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+#app {}
 </style>
